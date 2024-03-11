@@ -7,7 +7,17 @@ const app = express();
 const users = require("./routes/users");
 app.use("/users", users);
 
-app.listen(PORT, async()=>{
-    await client.connect();
-    console.log(`Server is running on port ${PORT}`);
+const connectToDatabase = async() => {
+  try {
+      await client.connect();
+      console.log("Connected to the database");
+  } catch (error) {
+      console.error("Failed to connect to the database:", error);
+  }
+}
+
+connectToDatabase();
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
